@@ -1,0 +1,43 @@
+name: Setup Project Structure
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Create all folders
+      run: |
+        folders=(
+          "gradle" "gradle/wrapper" "app" "app/src" "app/src/main"
+          "app/src/main/java/com/design/template"
+          "app/src/main/java/com/design/template/ui/theme"
+          "app/src/main/java/com/design/template/ui/screens"
+          "app/src/main/java/com/design/template/ui/navigation"
+          "app/src/main/java/com/design/template/ui/components"
+          "app/src/main/java/com/design/template/domain/model"
+          "app/src/main/java/com/design/template/util"
+          "app/src/main/res/values" "app/src/main/res/drawable"
+          "app/src/main/res/font"
+          "app/src/main/res/mipmap-anydpi-v26"
+          "app/src/main/res/mipmap-hdpi" "app/src/main/res/mipmap-mdpi"
+          "app/src/main/res/mipmap-xhdpi" "app/src/main/res/mipmap-xxhdpi"
+          "app/src/main/res/mipmap-xxxhdpi"
+          "app/src/test/java" "app/src/androidTest/java"
+        )
+        
+        for folder in "${folders[@]}"; do
+          mkdir -p "$folder"
+          touch "$folder/.gitkeep"
+          echo "✅ $folder"
+        done
+    
+    - name: Download structure
+      uses: actions/upload-artifact@v4
+      with:
+        name: project-structure
+        path: |
+          app/
+          gradle/
